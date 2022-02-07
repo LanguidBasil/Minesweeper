@@ -3,8 +3,8 @@
 
 int main()
 {
-	ConsoleInit();
-	PrintSquareSolid(1, 1, 10, 10);
-	PrintSquareHollow(12, 1, 10, 10);
+	Console::Init();
+	Console::PrintSquareSolid(1, 1, 10, 10);
+	Console::PrintSquareHollow(12, 1, 10, 10);
 	std::cout << "\n\n";
 }
