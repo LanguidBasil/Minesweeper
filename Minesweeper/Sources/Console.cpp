@@ -7,17 +7,18 @@
 
 static const char square = 219;
 
+using namespace Console;
 namespace Console
 {
 	static const HANDLE ConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	static void SetConsoleFont()
+	static void SetConsoleFont(short fontWidth, short fontHeight)
 	{
 		CONSOLE_FONT_INFOEX cfi;
 		cfi.cbSize = sizeof(CONSOLE_FONT_INFOEX);
 		cfi.nFont = 0;
-		cfi.dwFontSize.X = 12;
-		cfi.dwFontSize.Y = 12;
+		cfi.dwFontSize.X = fontWidth;
+		cfi.dwFontSize.Y = fontHeight;
 		cfi.FontFamily = FF_DONTCARE;
 		cfi.FontWeight = FW_NORMAL;
 		wcscpy_s(cfi.FaceName, L"Consolas");
@@ -25,18 +26,31 @@ namespace Console
 		SetCurrentConsoleFontEx(ConsoleOutput, false, &cfi);
 	}
 
-	void Console::Init()
+	static WORD ColorToWord(Color foregroundColor, Color backgroundColor)
 	{
-		SetConsoleFont();
+		return (int)foregroundColor + (int)backgroundColor * 16;
 	}
 
-	void Console::PrintMessage(short posX, short posY, const std::string& message)
+	void Init()
+	{
+		// TODO make window resize cleaner
+		COORD fontSize = { 12, 12 };
+		SMALL_RECT windowSize = { 0, 0, 25, 30 };
+
+		SetConsoleWindowInfo(ConsoleOutput, true, &windowSize);
+		//SetConsoleScreenBufferSize(ConsoleOutput, { 40, 30 });
+		MoveWindow(GetConsoleWindow(), 100, 80, 20 * fontSize.X, 30 * fontSize.Y, true);
+
+		SetConsoleFont(fontSize.X, fontSize.Y);
+	}
+
+	void PrintMessage(short posX, short posY, const std::string& message)
 	{
 		SetConsoleCursorPosition(ConsoleOutput, { posX, posY });
 		std::cout << message;
 	}
 
-	void Console::PrintSquareSolid(short posX, short posY, short width, short height)
+	void PrintSquareSolid(short posX, short posY, short width, short height)
 	{
 		for (auto h = 0; h < height; h++)
 		{
@@ -48,7 +62,7 @@ namespace Console
 		}
 	}
 
-	void Console::PrintSquareHollow(short posX, short posY, short width, short height)
+	void PrintSquareHollow(short posX, short posY, short width, short height)
 	{
 		auto squareLine = new char[width + 1];
 		for (auto i = 0; i < width; i++)
@@ -75,5 +89,11 @@ namespace Console
 			SetConsoleCursorPosition(ConsoleOutput, cursorPos);
 			std::cout << square;
 		}
+	}
+
+	void ChangeColor(Color foregroundColor, Color backgroundColor)
+	{
+		WORD color = ColorToWord(foregroundColor, backgroundColor);
+		SetConsoleTextAttribute(ConsoleOutput, color);
 	}
 }

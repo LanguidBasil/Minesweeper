@@ -4,7 +4,11 @@
 int main()
 {
 	Console::Init();
-	Console::PrintSquareSolid(1, 1, 10, 10);
-	Console::PrintSquareHollow(12, 1, 10, 10);
-	Console::PrintMessage(13, 2, "Yo");
+	Console::ChangeColor(Console::Color::BrightMagenta, Console::Color::Black);
+	Console::PrintSquareSolid(0, 0, 26, 10);
+	//Console::ChangeColor(Console::Color::BrightCyan, Console::Color::Black);
+	//Console::PrintSquareHollow(12, 0, 10, 10);
+	Console::ChangeColor(Console::Color::White, Console::Color::Black);
+	Console::PrintMessage(0, 11, "Yo");
+	std::cout << '\n';
 }
