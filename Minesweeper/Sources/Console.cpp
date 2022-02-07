@@ -9,6 +9,8 @@ static const char square = 219;
 
 namespace Console
 {
+	static const HANDLE ConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+
 	static void SetConsoleFont()
 	{
 		CONSOLE_FONT_INFOEX cfi;
@@ -22,8 +24,6 @@ namespace Console
 
 		SetCurrentConsoleFontEx(ConsoleOutput, false, &cfi);
 	}
-
-	const HANDLE ConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	void Console::Init()
 	{
