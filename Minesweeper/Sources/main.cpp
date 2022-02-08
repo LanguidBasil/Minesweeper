@@ -4,11 +4,15 @@
 int main()
 {
 	Console::Init();
-	Console::ChangeColor(Console::Color::BrightMagenta, Console::Color::Black);
-	Console::PrintSquareSolid(0, 0, 26, 10);
-	//Console::ChangeColor(Console::Color::BrightCyan, Console::Color::Black);
-	//Console::PrintSquareHollow(12, 0, 10, 10);
+
+	Console::ChangeColor(Console::Color::DarkGray, Console::Color::Black);
+	Console::PrintSquareHollow(1, 1, 12, 12);
 	Console::ChangeColor(Console::Color::White, Console::Color::Black);
-	Console::PrintMessage(0, 11, "Yo");
-	std::cout << '\n';
+	Console::PrintSquareSolid(2, 2, 10, 10);
+
+	Console::ChangeColor(Console::Color::White, Console::Color::Black);
+	Console::PrintMessage(1, 14, "Bombs left: 13");
+	Console::PrintMessage(1, 15, "Time left: 87\n");
+
+	std::cin.get();
 }

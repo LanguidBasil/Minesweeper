@@ -26,20 +26,27 @@ namespace Console
 		SetCurrentConsoleFontEx(ConsoleOutput, false, &cfi);
 	}
 
-	static WORD ColorToWord(Color foregroundColor, Color backgroundColor)
+	static void SetConsoleSize(int xOffset, int yOffset, int width, int height, int fontWidth, int fontHeight)
+	{
+		SMALL_RECT windowSize = { 0, 0, width, height };
+
+		SetConsoleWindowInfo(ConsoleOutput, true, &windowSize);
+		MoveWindow(GetConsoleWindow(), xOffset, yOffset, 20 * fontWidth, 30 * fontHeight, true);
+	}
+
+	static constexpr WORD ColorToWord(Color foregroundColor, Color backgroundColor)
 	{
 		return (int)foregroundColor + (int)backgroundColor * 16;
 	}
 
 	void Init()
 	{
-		// TODO make window resize cleaner
 		COORD fontSize = { 12, 12 };
-		SMALL_RECT windowSize = { 0, 0, 25, 30 };
+		COORD consoleSize = { 25, 30 };
+		LPCSTR consoleTitle = "Minesweeper";
 
-		SetConsoleWindowInfo(ConsoleOutput, true, &windowSize);
-		//SetConsoleScreenBufferSize(ConsoleOutput, { 40, 30 });
-		MoveWindow(GetConsoleWindow(), 100, 80, 20 * fontSize.X, 30 * fontSize.Y, true);
+		SetConsoleTitleA(consoleTitle);
+		SetConsoleSize(100, 80, consoleSize.X, consoleSize.Y, fontSize.X, fontSize.Y);
 
 		SetConsoleFont(fontSize.X, fontSize.Y);
 	}
