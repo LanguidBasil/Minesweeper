@@ -7,7 +7,6 @@
 
 static const char square = 219;
 
-using namespace Console;
 namespace Console
 {
 	static const HANDLE ConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);

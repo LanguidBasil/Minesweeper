@@ -1,9 +1,13 @@
 #include <iostream>
-#include "Console.h";
+#include "Console.h"
+#include "Board.h"
 
 int main()
 {
 	Console::Init();
+
+	Minesweeper::Board<10, 10> b;
+	b.FlagCell(0, 0);
 
 	Console::ChangeColor(Console::Color::DarkGray, Console::Color::Black);
 	Console::PrintSquareHollow(1, 1, 12, 12);
