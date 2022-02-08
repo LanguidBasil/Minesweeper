@@ -17,8 +17,7 @@ namespace Console
 		CONSOLE_FONT_INFOEX cfi;
 		cfi.cbSize = sizeof(CONSOLE_FONT_INFOEX);
 		cfi.nFont = 0;
-		cfi.dwFontSize.X = fontWidth;
-		cfi.dwFontSize.Y = fontHeight;
+		cfi.dwFontSize = { fontWidth, fontHeight };
 		cfi.FontFamily = FF_DONTCARE;
 		cfi.FontWeight = FW_NORMAL;
 		wcscpy_s(cfi.FaceName, L"Consolas");
