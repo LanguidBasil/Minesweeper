@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <cstring>
 
-static const char square = 219;
+static const char SQUARE = 219;
 
 namespace Console
 {
@@ -63,16 +63,13 @@ namespace Console
 			SetConsoleCursorPosition(ConsoleOutput, cursorPos);
 
 			for (auto w = 0; w < width; w++)
-				std::cout << square;
+				std::cout << SQUARE;
 		}
 	}
 
 	void PrintSquareHollow(short posX, short posY, short width, short height)
 	{
-		auto squareLine = new char[width + 1];
-		for (auto i = 0; i < width; i++)
-			squareLine[i] = square;
-		squareLine[width] = 0;
+		auto squareLine = std::string(width, SQUARE);
 
 		COORD cursorPos = { posX, posY };
 		SetConsoleCursorPosition(ConsoleOutput, cursorPos);
@@ -87,12 +84,12 @@ namespace Console
 			cursorPos.X = posX;
 			cursorPos.Y = posY + h;
 			SetConsoleCursorPosition(ConsoleOutput, cursorPos);
-			std::cout << square;
+			std::cout << SQUARE;
 
 			cursorPos.X = posX + width - 1;
 			cursorPos.Y = posY + h;
 			SetConsoleCursorPosition(ConsoleOutput, cursorPos);
-			std::cout << square;
+			std::cout << SQUARE;
 		}
 	}
 
