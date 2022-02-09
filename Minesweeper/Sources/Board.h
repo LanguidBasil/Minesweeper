@@ -19,6 +19,12 @@ namespace Minesweeper
 	class Board
 	{
 	public:
+		const int Width;
+		const int Height;
+
+		Board()
+			: Cells(std::array<Cell, width* height>()), Width(width), Height(height) {};
+
 		void FlagCell(int posX, int posY)
 		{
 
