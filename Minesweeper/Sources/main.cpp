@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Console.h"
-#include "Board.h"
+#include "Minesweeper/Board.h"
 
 Console::Color ColorOfBombCount(int bombsAroundCell)
 {
