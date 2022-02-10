@@ -27,7 +27,18 @@ namespace Console
 		BrightYellow = 14
 	};
 
-	void Init();
+	struct ConsoleSettings
+	{
+		int FontWidth;
+		int FontHeight;
+
+		int ConsoleWidth;
+		int ConsoleHeight;
+
+		std::string ConsoleTitle;
+	};
+
+	void Init(const ConsoleSettings& cs);
 	void PrintMessage(short posX, short posY, const std::string& message);
 	void PrintSquareSolid(short posX, short posY, short width, short height);
 	void PrintSquareHollow(short posX, short posY, short width, short height);

@@ -5,9 +5,16 @@
 
 int main()
 {
-	Console::Init();
 	const int BOARD_WIDTH = 10;
 	const int BOARD_HEIGHT = 10;
+
+	Console::ConsoleSettings cs;
+	cs.ConsoleWidth = 15;
+	cs.ConsoleHeight = 15;
+	cs.FontWidth = 12;
+	cs.FontHeight = 12;
+	cs.ConsoleTitle = "Minesweeper";
+	Console::Init(cs);
 
 	Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT> b;
 	b.FlagCell(0, 0);

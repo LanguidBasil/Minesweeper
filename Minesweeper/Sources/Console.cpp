@@ -37,16 +37,12 @@ namespace Console
 		return (int)foregroundColor + (int)backgroundColor * 16;
 	}
 
-	void Init()
+	void Init(const ConsoleSettings& cs)
 	{
-		COORD fontSize = { 12, 12 };
-		COORD consoleSize = { 100, 100 };
-		LPCSTR consoleTitle = "Minesweeper";
+		SetConsoleTitleA(cs.ConsoleTitle.c_str());
+		SetConsoleSize(100, 80, cs.ConsoleWidth, cs.ConsoleHeight, cs.FontWidth, cs.FontHeight);
 
-		SetConsoleTitleA(consoleTitle);
-		SetConsoleSize(100, 80, consoleSize.X, consoleSize.Y, fontSize.X, fontSize.Y);
-
-		SetConsoleFont(fontSize.X, fontSize.Y);
+		SetConsoleFont(cs.FontWidth, cs.FontHeight);
 	}
 
 	void PrintMessage(short posX, short posY, const std::string& message)
