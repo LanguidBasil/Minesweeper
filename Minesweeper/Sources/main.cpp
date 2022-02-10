@@ -35,6 +35,16 @@ int main()
 	d.Draw();
 
 	Console::SetCursorPos(14, 4);
+	int yPos = 5;
+	while (true)
+	{
+		auto me = Console::GetCursorEvent();
+		if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::None)
+			continue;
+		std::string meMessage = std::to_string((int)me.ButtonPressed) + ' ' + std::to_string(me.PosX) + ' ' + std::to_string(me.PosY);
+		Console::PrintMessage(14, yPos++, meMessage);
+	}
 
+	Console::SetCursorPos(1, 20);
 	std::cin.get();
 }

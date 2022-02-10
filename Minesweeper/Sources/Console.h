@@ -27,6 +27,20 @@ namespace Console
 		BrightYellow = 14
 	};
 
+	struct MouseEvent
+	{
+		enum struct ButtonPressed
+		{
+			None,
+			Left,
+			Right
+		};
+
+		ButtonPressed ButtonPressed;
+		int PosX;
+		int PosY;
+	};
+
 	struct ConsoleSettings
 	{
 		int FontWidth;
@@ -44,4 +58,5 @@ namespace Console
 	void PrintSquareHollow(short posX, short posY, short width, short height);
 	void ChangeColor(Color foregroundColor, Color backgroundColor);
 	void SetCursorPos(short posX, short posY);
+	MouseEvent GetCursorEvent();
 };

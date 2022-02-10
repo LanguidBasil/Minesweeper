@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <array>
 #include <Windows.h>
 #include <cstring>
 
@@ -10,6 +11,7 @@ static const char SQUARE = 219;
 namespace Console
 {
 	static const HANDLE ConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	static const HANDLE ConsoleInput = GetStdHandle(STD_INPUT_HANDLE);
 
 	static void SetConsoleFont(short fontWidth, short fontHeight)
 	{
@@ -39,6 +41,8 @@ namespace Console
 
 	void Init(const ConsoleSettings& cs)
 	{
+		SetConsoleMode(ConsoleInput, ENABLE_MOUSE_INPUT);
+
 		SetConsoleTitleA(cs.ConsoleTitle.c_str());
 		SetConsoleSize(100, 80, cs.ConsoleWidth, cs.ConsoleHeight, cs.FontWidth, cs.FontHeight);
 
@@ -98,5 +102,42 @@ namespace Console
 	void SetCursorPos(short posX, short posY)
 	{
 		SetConsoleCursorPosition(ConsoleOutput, { posX, posY });
+	}
+
+	MouseEvent GetCursorEvent()
+	{
+		MouseEvent me;
+		DWORD amountOfInputEventsRead;
+		std::array<INPUT_RECORD, 64> inputs;
+
+		if (!ReadConsoleInput(ConsoleInput, inputs.data(), inputs.size(), &amountOfInputEventsRead))
+			return { MouseEvent::ButtonPressed::None, 0, 0 };
+
+		for (auto i = 0; i < amountOfInputEventsRead; i++)
+		{
+			if (inputs[i].EventType == MOUSE_EVENT)
+			{
+				const auto& mouseEventRecord = inputs[i].Event.MouseEvent;
+				switch (mouseEventRecord.dwButtonState)
+				{
+				case FROM_LEFT_1ST_BUTTON_PRESSED:
+					me.ButtonPressed = MouseEvent::ButtonPressed::Left;
+					break;
+
+				case RIGHTMOST_BUTTON_PRESSED:
+					me.ButtonPressed = MouseEvent::ButtonPressed::Right;
+					break;
+
+				default:
+					me.ButtonPressed = MouseEvent::ButtonPressed::None;
+					break;
+				}
+				me.PosX = mouseEventRecord.dwMousePosition.X;
+				me.PosY = mouseEventRecord.dwMousePosition.Y;
+				return me;
+			}
+		}
+
+		return { MouseEvent::ButtonPressed::None, 0, 0 };
 	}
 }
