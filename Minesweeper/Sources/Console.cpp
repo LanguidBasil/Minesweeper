@@ -94,4 +94,9 @@ namespace Console
 		WORD color = ColorToWord(foregroundColor, backgroundColor);
 		SetConsoleTextAttribute(ConsoleOutput, color);
 	}
+
+	void SetCursorPos(short posX, short posY)
+	{
+		SetConsoleCursorPosition(ConsoleOutput, { posX, posY });
+	}
 }

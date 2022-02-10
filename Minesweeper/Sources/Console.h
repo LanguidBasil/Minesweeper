@@ -43,4 +43,5 @@ namespace Console
 	void PrintSquareSolid(short posX, short posY, short width, short height);
 	void PrintSquareHollow(short posX, short posY, short width, short height);
 	void ChangeColor(Color foregroundColor, Color backgroundColor);
+	void SetCursorPos(short posX, short posY);
 };

@@ -9,8 +9,8 @@ int main()
 	const int BOARD_HEIGHT = 10;
 
 	Console::ConsoleSettings cs;
-	cs.ConsoleWidth = 15;
-	cs.ConsoleHeight = 15;
+	cs.ConsoleWidth = 40;
+	cs.ConsoleHeight = 40;
 	cs.FontWidth = 12;
 	cs.FontHeight = 12;
 	cs.ConsoleTitle = "Minesweeper";
@@ -33,6 +33,8 @@ int main()
 
 	Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT> d(b, ds);
 	d.Draw();
+
+	Console::SetCursorPos(14, 4);
 
 	std::cin.get();
 }
