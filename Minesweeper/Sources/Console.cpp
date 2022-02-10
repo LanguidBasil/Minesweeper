@@ -29,7 +29,7 @@ namespace Console
 		SMALL_RECT windowSize = { 0, 0, width, height };
 
 		SetConsoleWindowInfo(ConsoleOutput, true, &windowSize);
-		MoveWindow(GetConsoleWindow(), xOffset, yOffset, 20 * fontWidth, 30 * fontHeight, true);
+		MoveWindow(GetConsoleWindow(), xOffset, yOffset, width * fontWidth, height * fontHeight, true);
 	}
 
 	static constexpr WORD ColorToWord(Color foregroundColor, Color backgroundColor)
@@ -40,7 +40,7 @@ namespace Console
 	void Init()
 	{
 		COORD fontSize = { 12, 12 };
-		COORD consoleSize = { 25, 30 };
+		COORD consoleSize = { 100, 100 };
 		LPCSTR consoleTitle = "Minesweeper";
 
 		SetConsoleTitleA(consoleTitle);

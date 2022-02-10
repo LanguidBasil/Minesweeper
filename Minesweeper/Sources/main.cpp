@@ -14,7 +14,17 @@ int main()
 	b.OpenCell(1, 0);
 	b.OpenCell(2, 7);
 
-	Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT> d(b);
+	Minesweeper::DrawerSettings ds;
+	ds.ColorFrame = Console::Color::DarkGray;
+	ds.ColorCellClosed = Console::Color::White;
+	ds.ColorCellFlagged = Console::Color::DarkRed;
+	ds.ColorCellOpen = Console::Color::BrightGray;
+	ds.BoardStartPositionX = 1;
+	ds.BoardStartPositionY = 1;
+	ds.TextStartPositionX = 14;
+	ds.TextStartPositionY = 1;
+
+	Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT> d(b, ds);
 	d.Draw();
 
 	std::cin.get();
