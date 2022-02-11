@@ -76,7 +76,7 @@ namespace Minesweeper
 		}
 
 	private:
-		const Minesweeper::Board<width, height> Board;
+		const Minesweeper::Board<width, height>& Board;
 		const DrawerSettings DrawerSettings;
 
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const
