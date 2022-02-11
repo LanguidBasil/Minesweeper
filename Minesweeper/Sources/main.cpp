@@ -35,7 +35,6 @@ int main()
 	d.Draw();
 
 	Console::SetCursorPos(14, 4);
-	short yPos = 5;
 	while (true)
 	{
 		auto me = Console::GetCursorEvent();
@@ -48,17 +47,10 @@ int main()
 			-1 < yOnBoard && yOnBoard < BOARD_HEIGHT)
 		{
 			if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Left)
-			{
 				b.OpenCell(xOnBoard, yOnBoard);
-			}
 			else if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
-			{
 				b.FlagCell(xOnBoard, yOnBoard);
-			}
 			d.Draw();
-
-			std::string meMessage = std::to_string((int)me.ButtonPressed) + ' ' + std::to_string(xOnBoard) + ' ' + std::to_string(yOnBoard);
-			Console::PrintMessage(14, yPos++, meMessage);
 		}
 	}
 
