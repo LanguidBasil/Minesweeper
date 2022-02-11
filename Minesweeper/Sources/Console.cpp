@@ -41,7 +41,7 @@ namespace Console
 
 	void Init(const ConsoleSettings& cs)
 	{
-		SetConsoleMode(ConsoleInput, ENABLE_MOUSE_INPUT);
+		SetConsoleMode(ConsoleInput, ENABLE_EXTENDED_FLAGS | ENABLE_MOUSE_INPUT);
 
 		SetConsoleTitleA(cs.ConsoleTitle.c_str());
 		SetConsoleSize(100, 80, cs.ConsoleWidth, cs.ConsoleHeight, cs.FontWidth, cs.FontHeight);
@@ -115,27 +115,27 @@ namespace Console
 
 		for (auto i = 0; i < amountOfInputEventsRead; i++)
 		{
-			if (inputs[i].EventType == MOUSE_EVENT)
+			if (inputs[i].EventType != MOUSE_EVENT)
+				continue;
+
+			const auto& mouseEventRecord = inputs[i].Event.MouseEvent;
+			switch (mouseEventRecord.dwButtonState)
 			{
-				const auto& mouseEventRecord = inputs[i].Event.MouseEvent;
-				switch (mouseEventRecord.dwButtonState)
-				{
-				case FROM_LEFT_1ST_BUTTON_PRESSED:
-					me.ButtonPressed = MouseEvent::ButtonPressed::Left;
-					break;
+			case FROM_LEFT_1ST_BUTTON_PRESSED:
+				me.ButtonPressed = MouseEvent::ButtonPressed::Left;
+				break;
 
-				case RIGHTMOST_BUTTON_PRESSED:
-					me.ButtonPressed = MouseEvent::ButtonPressed::Right;
-					break;
+			case RIGHTMOST_BUTTON_PRESSED:
+				me.ButtonPressed = MouseEvent::ButtonPressed::Right;
+				break;
 
-				default:
-					me.ButtonPressed = MouseEvent::ButtonPressed::None;
-					break;
-				}
-				me.PosX = mouseEventRecord.dwMousePosition.X;
-				me.PosY = mouseEventRecord.dwMousePosition.Y;
-				return me;
+			default:
+				me.ButtonPressed = MouseEvent::ButtonPressed::None;
+				break;
 			}
+			me.PosX = mouseEventRecord.dwMousePosition.X;
+			me.PosY = mouseEventRecord.dwMousePosition.Y;
+			return me;
 		}
 
 		return { MouseEvent::ButtonPressed::None, 0, 0 };
