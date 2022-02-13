@@ -32,14 +32,6 @@ int main()
 		ds.TextStartPositionY = 1;
 	}
 
-	for (auto h = 0; h < b.HEIGHT; h++)
-	{
-		for (auto w = 0; w < b.WIDTH; w++)
-		{
-			b.OpenCell(w, h);
-		}
-	}
-
 	Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds);
 	d.Draw();
 
@@ -56,7 +48,16 @@ int main()
 			-1 < yOnBoard && yOnBoard < BOARD_HEIGHT)
 		{
 			if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Left)
+			{
 				b.OpenCell(xOnBoard, yOnBoard);
+				auto cell = b.GetCell(xOnBoard, yOnBoard);
+
+				if (cell.HasBomb)
+				{
+					d.Draw();
+					break;
+				}
+			}
 			else if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
 				b.FlagCell(xOnBoard, yOnBoard);
 			d.Draw();
