@@ -7,7 +7,8 @@ int main()
 {
 	const int BOARD_WIDTH = 10;
 	const int BOARD_HEIGHT = 10;
-	Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT> b;
+	const int AMOUNT_OF_BOMBS = 20;
+	Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> b;
 
 	Console::ConsoleSettings cs;
 	{
@@ -31,7 +32,7 @@ int main()
 		ds.TextStartPositionY = 1;
 	}
 
-	Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT> d(b, ds);
+	Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds);
 	d.Draw();
 
 	Console::SetCursorPos(14, 4);

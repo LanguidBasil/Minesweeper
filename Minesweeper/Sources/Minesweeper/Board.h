@@ -20,15 +20,16 @@ namespace Minesweeper
 			: HasMine(false), State(State::Closed) {}
 	};
 
-	template <int width, int height>
+	template <int width, int height, int amountOfBombs>
 	class Board
 	{
 	public:
-		const int Width;
-		const int Height;
+		const int WIDTH;
+		const int HEIGHT;
+		const int AMOUNT_OF_BOMBS;
 
 		Board()
-			: Cells(std::array<Cell, width* height>()), Width(width), Height(height) {}
+			: Cells(std::array<Cell, width* height>()), WIDTH(width), HEIGHT(height), AMOUNT_OF_BOMBS(amountOfBombs) {}
 
 		void FlagCell(int posX, int posY)
 		{
@@ -42,7 +43,7 @@ namespace Minesweeper
 
 		constexpr int BombsAroundCell(int posX, int posY) const
 		{
-			return 1;
+			return 0;
 		}
 
 		constexpr Cell GetCell(int posX, int posY) const
@@ -55,7 +56,7 @@ namespace Minesweeper
 
 		constexpr int PosToIndex(int posX, int posY) const
 		{
-			return posY * Width + posX;
+			return posY * WIDTH + posX;
 		}
 	};
 }

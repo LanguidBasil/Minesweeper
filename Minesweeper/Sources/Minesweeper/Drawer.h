@@ -19,11 +19,11 @@ namespace Minesweeper
 		int TextStartPositionY;
 	};
 
-	template<int width, int height>
+	template<int width, int height, int amountOfBombs>
 	class Drawer
 	{
 	public:
-		explicit Drawer(const Minesweeper::Board<width, height>& b, const DrawerSettings& drawerSettings)
+		explicit Drawer(const Minesweeper::Board<width, height, amountOfBombs>& b, const DrawerSettings& drawerSettings)
 			: Board(b), DrawerSettings(drawerSettings) {}
 
 		void Draw() const
@@ -34,9 +34,9 @@ namespace Minesweeper
 			Console::ChangeColor(DrawerSettings.ColorFrame, Console::Color::Black);
 			Console::PrintSquareHollow(boardXStart, boardYStart, 12, 12);
 
-			for (auto h = 0; h < Board.Height; h++)
+			for (auto h = 0; h < Board.HEIGHT; h++)
 			{
-				for (auto w = 0; w < Board.Width; w++)
+				for (auto w = 0; w < Board.WIDTH; w++)
 				{
 					auto cell = Board.GetCell(w, h);
 					Console::Color fontColor;
@@ -76,11 +76,13 @@ namespace Minesweeper
 		}
 
 	private:
-		const Minesweeper::Board<width, height>& Board;
+		const Minesweeper::Board<width, height, amountOfBombs>& Board;
 		const DrawerSettings DrawerSettings;
 
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const
 		{
+			if (bombsAroundCell == 0)
+				return DrawerSettings.ColorCellOpen;
 			return Console::Color::BrightBlue;
 		}
 	};
