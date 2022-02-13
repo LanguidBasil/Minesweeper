@@ -35,7 +35,8 @@ int main()
 	Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds);
 	d.Draw();
 
-	Console::SetCursorPos(14, 4);
+	// TODO move input else there
+	// TODO on clicking empty cell with no bombs around it, automatically open adjacent cells
 	while (true)
 	{
 		auto me = Console::GetCursorEvent();

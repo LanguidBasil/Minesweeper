@@ -86,6 +86,7 @@ namespace Minesweeper
 		const Minesweeper::Board<width, height, amountOfBombs>& Board;
 		const DrawerSettings DrawerSettings;
 
+		// TODO add different colors
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const
 		{
 			if (bombsAroundCell == 0)
