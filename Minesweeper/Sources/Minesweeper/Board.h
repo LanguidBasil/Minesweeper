@@ -56,18 +56,23 @@ namespace Minesweeper
 
 		constexpr int BombsAroundCell(int posX, int posY) const
 		{
-			return 0;
+			// O O O
+			// O X O
+			// O O O
 
 			int bombCount = 0;
 			for (auto h = -1; h < 2; h++)
 			{
 				for (auto w = -1; w < 2; w++)
 				{
+					if (h == 0 && w == 0)
+						continue;
+
 					auto currentHeight = posY + h;
 					auto currentWidth  = posX + w;
 
-					if (-1 < currentHeight || currentHeight >= HEIGHT ||
-						-1 < currentWidth  || currentWidth  >= WIDTH)
+					if (currentHeight >= HEIGHT || 0 > currentHeight ||
+						currentWidth  >= WIDTH  || 0 > currentWidth)
 					{
 						continue;
 					}
