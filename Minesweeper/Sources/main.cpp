@@ -59,7 +59,10 @@ int main()
 				}
 			}
 			else if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
+			{
 				b.FlagCell(xOnBoard, yOnBoard);
+			}
+
 			d.Draw();
 		}
 	}
