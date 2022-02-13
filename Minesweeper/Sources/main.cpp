@@ -32,6 +32,14 @@ int main()
 		ds.TextStartPositionY = 1;
 	}
 
+	for (auto h = 0; h < b.HEIGHT; h++)
+	{
+		for (auto w = 0; w < b.WIDTH; w++)
+		{
+			b.OpenCell(w, h);
+		}
+	}
+
 	Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds);
 	d.Draw();
 

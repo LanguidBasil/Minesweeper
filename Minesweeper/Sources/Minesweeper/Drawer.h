@@ -54,6 +54,13 @@ namespace Minesweeper
 						break;
 
 					case Minesweeper::Cell::State::Open:
+						if (cell.HasBomb)
+						{
+							Console::ChangeColor(Console::Color::DarkMagenta, Console::Color::DarkMagenta);
+							Console::PrintSquareSolid(w + boardXStart + 1, h + boardYStart + 1, 1, 1);
+							break;
+						}
+
 						bombsAroundCell = Board.BombsAroundCell(w, h);
 						fontColor = ColorOfBombCount(bombsAroundCell);
 
