@@ -34,16 +34,7 @@ namespace Minesweeper
 		Board()
 			: Cells(std::array<Cell, width * height>()), WIDTH(width), HEIGHT(height), AMOUNT_OF_BOMBS(amountOfBombs)
 		{
-			constexpr int cellAmount = width * height;
-			std::array<int, cellAmount> cellsIndecesWithBombs {};
-
-			for (auto i = 0; i < cellAmount; i++)
-				cellsIndecesWithBombs[i] = i;
-
-			std::random_shuffle(std::begin(cellsIndecesWithBombs), std::end(cellsIndecesWithBombs));
-
-			for (auto i = 0; i < amountOfBombs; i++)
-				Cells[cellsIndecesWithBombs[i]].HasBomb = true;
+			PopulateWithBombs();
 		}
 
 		void FlagCell(int posX, int posY)
@@ -98,6 +89,21 @@ namespace Minesweeper
 		constexpr int PosToIndex(int posX, int posY) const
 		{
 			return posY * WIDTH + posX;
+		}
+
+		void PopulateWithBombs()
+		{
+			constexpr int cellAmount = width * height;
+			std::array<int, cellAmount> cellsIndecesWithBombs{};
+
+			for (auto i = 0; i < cellAmount; i++)
+				cellsIndecesWithBombs[i] = i;
+
+			std::srand(std::time(nullptr));
+			std::random_shuffle(std::begin(cellsIndecesWithBombs), std::end(cellsIndecesWithBombs));
+
+			for (auto i = 0; i < amountOfBombs; i++)
+				Cells[cellsIndecesWithBombs[i]].HasBomb = true;
 		}
 	};
 }
