@@ -30,7 +30,7 @@ namespace Minesweeper
 		const int AMOUNT_OF_BOMBS;
 
 
-		Board()
+		explicit Board()
 			: Cells(std::array<Cell, width * height>()), WIDTH(width), HEIGHT(height), AMOUNT_OF_BOMBS(amountOfBombs)
 		{
 			PopulateWithBombs();
