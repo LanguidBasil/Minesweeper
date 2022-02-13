@@ -30,7 +30,6 @@ namespace Minesweeper
 		const int AMOUNT_OF_BOMBS;
 
 
-		// TODO 'random' generation always produces the same board
 		Board()
 			: Cells(std::array<Cell, width * height>()), WIDTH(width), HEIGHT(height), AMOUNT_OF_BOMBS(amountOfBombs)
 		{
