@@ -78,8 +78,7 @@ namespace Minesweeper
 			int textYStart = Settings.TextStartPositionY;
 
 			Console::ChangeColor(Console::Color::White, Console::Color::Black);
-			Console::PrintMessage(textXStart, textYStart, "Bombs left: 13");
-			Console::PrintMessage(textXStart, textYStart + 1, "Time left: 87\n");
+			Console::PrintMessage(textXStart, textYStart, "Time left: 87\n");
 		}
 
 		const DrawerSettings& GetDrawerSettings() const
