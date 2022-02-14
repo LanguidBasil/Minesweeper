@@ -24,14 +24,14 @@ namespace Minesweeper
 	{
 	public:
 		explicit Drawer(const Minesweeper::Board<width, height, amountOfBombs>& b, const DrawerSettings& drawerSettings)
-			: Board(b), DrawerSettings(drawerSettings) {}
+			: Board(b), Settings(drawerSettings) {}
 
 		void Draw() const
 		{
-			int boardXStart = DrawerSettings.BoardStartPositionX;
-			int boardYStart = DrawerSettings.BoardStartPositionY;
+			int boardXStart = Settings.BoardStartPositionX;
+			int boardYStart = Settings.BoardStartPositionY;
 
-			Console::ChangeColor(DrawerSettings.ColorFrame, Console::Color::Black);
+			Console::ChangeColor(Settings.ColorFrame, Console::Color::Black);
 			Console::PrintSquareHollow(boardXStart, boardYStart, 12, 12);
 
 			for (auto h = 0; h < Board.HEIGHT; h++)
@@ -44,12 +44,12 @@ namespace Minesweeper
 					switch (cell.State)
 					{
 					case Minesweeper::Cell::State::Closed:
-						Console::ChangeColor(DrawerSettings.ColorCellClosed, Console::Color::Black);
+						Console::ChangeColor(Settings.ColorCellClosed, Console::Color::Black);
 						Console::PrintSquareSolid(w + boardXStart + 1, h + boardYStart + 1, 1, 1);
 						break;
 
 					case Minesweeper::Cell::State::Flagged:
-						Console::ChangeColor(DrawerSettings.ColorCellFlagged, Console::Color::Black);
+						Console::ChangeColor(Settings.ColorCellFlagged, Console::Color::Black);
 						Console::PrintSquareSolid(w + boardXStart + 1, h + boardYStart + 1, 1, 1);
 						break;
 
@@ -64,7 +64,7 @@ namespace Minesweeper
 						bombsAroundCell = Board.BombsAroundCell(w, h);
 						fontColor = ColorOfBombCount(bombsAroundCell);
 
-						Console::ChangeColor(fontColor, DrawerSettings.ColorCellOpen);
+						Console::ChangeColor(fontColor, Settings.ColorCellOpen);
 						Console::PrintMessage(w + boardXStart + 1, h + boardYStart + 1, std::to_string(bombsAroundCell));
 						break;
 
@@ -74,23 +74,27 @@ namespace Minesweeper
 				}
 			}
 
-			int textXStart = DrawerSettings.TextStartPositionX;
-			int textYStart = DrawerSettings.TextStartPositionY;
+			int textXStart = Settings.TextStartPositionX;
+			int textYStart = Settings.TextStartPositionY;
 
 			Console::ChangeColor(Console::Color::White, Console::Color::Black);
 			Console::PrintMessage(textXStart, textYStart, "Bombs left: 13");
 			Console::PrintMessage(textXStart, textYStart + 1, "Time left: 87\n");
 		}
+		const DrawerSettings& GetDrawerSettings() const
+		{
+			return Settings;
+		}
 
 	private:
 		const Minesweeper::Board<width, height, amountOfBombs>& Board;
-		const DrawerSettings DrawerSettings;
+		const DrawerSettings Settings;
 
 		// TODO add different colors
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const
 		{
 			if (bombsAroundCell == 0)
-				return DrawerSettings.ColorCellOpen;
+				return Settings.ColorCellOpen;
 			return Console::Color::BrightBlue;
 		}
 	};
