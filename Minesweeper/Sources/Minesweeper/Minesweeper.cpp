@@ -50,8 +50,6 @@ namespace Minesweeper
 		const int BOARD_WIDTH = 10;
 		const int BOARD_HEIGHT = 10;
 		const int AMOUNT_OF_BOMBS = 20;
-		Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> b;
-
 		Console::ConsoleSettings cs;
 		{
 			cs.ConsoleWidth = 40;
@@ -59,9 +57,7 @@ namespace Minesweeper
 			cs.FontWidth = 12;
 			cs.FontHeight = 12;
 			cs.ConsoleTitle = "Minesweeper";
-			Console::Init(cs);
 		}
-
 		Minesweeper::DrawerSettings ds;
 		{
 			ds.ColorFrame = Console::Color::DarkGray;
@@ -74,13 +70,15 @@ namespace Minesweeper
 			ds.TextStartPositionY = 1;
 		}
 
+		Console::Init(cs);
+		Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> b;
 		Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds);
 		d.Draw();
 
 		// TODO move input else there
 		ReceiveInput(b, d);
 
-		Console::SetCursorPos(1, 20);
+		Console::PrintMessage(1, ds.BoardStartPositionY + BOARD_HEIGHT + 2, "Bomb! Game Over");
 		std::cin.get();
 	}
 }
