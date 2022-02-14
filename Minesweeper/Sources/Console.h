@@ -58,5 +58,5 @@ namespace Console
 	void PrintSquareHollow(short posX, short posY, short width, short height);
 	void ChangeColor(Color foregroundColor, Color backgroundColor);
 	void SetCursorPos(short posX, short posY);
-	MouseEvent GetCursorEvent();
+	MouseEvent GetMouseEvent();
 };

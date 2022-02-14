@@ -55,17 +55,18 @@ namespace Minesweeper
 
 		while (true)
 		{
-			auto me = Console::GetCursorEvent();
-			if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::None)
+			auto mouseEvent = Console::GetMouseEvent();
+			if (mouseEvent.ButtonPressed == Console::MouseEvent::ButtonPressed::None)
 				continue;
 
-			int xOnBoard = me.PosX - drawerSettings.BoardStartPositionX - 1;
-			int yOnBoard = me.PosY - drawerSettings.BoardStartPositionY - 1;
+			constexpr int frameWidth = 1;
+			int xOnBoard = mouseEvent.PosX - drawerSettings.BoardStartPositionX - frameWidth;
+			int yOnBoard = mouseEvent.PosY - drawerSettings.BoardStartPositionY - frameWidth;
 
 			if (!InBoardBounds(xOnBoard, yOnBoard, boardWidth, boardHeight))
 				continue;
 
-			if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Left)
+			if (mouseEvent.ButtonPressed == Console::MouseEvent::ButtonPressed::Left)
 			{
 				if (OpenCell(board, xOnBoard, yOnBoard) == -1)
 				{
@@ -73,7 +74,7 @@ namespace Minesweeper
 					return;
 				}
 			}
-			else if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
+			else if (mouseEvent.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
 			{
 				board.FlagCell(xOnBoard, yOnBoard);
 			}

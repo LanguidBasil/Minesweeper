@@ -104,7 +104,7 @@ namespace Console
 		SetConsoleCursorPosition(ConsoleOutput, { posX, posY });
 	}
 
-	MouseEvent GetCursorEvent()
+	MouseEvent GetMouseEvent()
 	{
 		MouseEvent me;
 		DWORD amountOfInputEventsRead;
