@@ -73,7 +73,6 @@ namespace Minesweeper
 					return;
 				}
 			}
-			// TODO: can't flag open cell
 			else if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
 			{
 				board.FlagCell(xOnBoard, yOnBoard);
