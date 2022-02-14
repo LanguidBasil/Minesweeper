@@ -38,7 +38,10 @@ namespace Minesweeper
 
 		void FlagCell(int posX, int posY)
 		{
-			Cells[PosToIndex(posX, posY)].State = Cell::State::Flagged;
+			auto& cell = Cells[PosToIndex(posX, posY)];
+
+			if (cell.State != Cell::State::Open)
+				cell.State = Cell::State::Flagged;
 		}
 
 		void OpenCell(int posX, int posY)

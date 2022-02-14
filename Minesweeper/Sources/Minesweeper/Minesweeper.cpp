@@ -13,7 +13,6 @@ static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boar
 
 namespace Minesweeper
 {
-
 	template<int boardWidth, int boardHeight, int amountOfBombs>
 	int OpenCell(Board <boardWidth, boardHeight, amountOfBombs>& board, int posX, int posY)
 	{
