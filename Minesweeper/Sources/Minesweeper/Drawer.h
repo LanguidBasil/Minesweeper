@@ -28,6 +28,21 @@ namespace Minesweeper
 
 		void Draw() const
 		{
+			DrawBoard();
+			//DrawText();
+		}
+
+		const DrawerSettings& GetDrawerSettings() const
+		{
+			return Settings;
+		}
+
+	private:
+		const Minesweeper::Board<width, height, amountOfBombs>& Board;
+		const DrawerSettings Settings;
+
+		void DrawBoard() const
+		{
 			int boardXStart = Settings.BoardStartPositionX;
 			int boardYStart = Settings.BoardStartPositionY;
 
@@ -73,22 +88,16 @@ namespace Minesweeper
 					}
 				}
 			}
+		}
 
+		void DrawText() const
+		{
 			int textXStart = Settings.TextStartPositionX;
 			int textYStart = Settings.TextStartPositionY;
 
 			Console::ChangeColor(Console::Color::White, Console::Color::Black);
 			Console::PrintMessage(textXStart, textYStart, "Time left: 87\n");
 		}
-
-		const DrawerSettings& GetDrawerSettings() const
-		{
-			return Settings;
-		}
-
-	private:
-		const Minesweeper::Board<width, height, amountOfBombs>& Board;
-		const DrawerSettings Settings;
 
 		// TODO add different colors
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const
