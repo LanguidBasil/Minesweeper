@@ -11,6 +11,8 @@ namespace Minesweeper
 	void ReceiveInput(Board <boardWidth, boardHeight, amountOfBombs>& board,
 					  const Drawer<boardWidth, boardHeight, amountOfBombs>& drawer)
 	{
+		auto& drawerSettings = drawer.GetDrawerSettings();
+
 		// TODO on clicking empty cell with no bombs around it, automatically open adjacent cells
 		while (true)
 		{
@@ -18,30 +20,30 @@ namespace Minesweeper
 			if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::None)
 				continue;
 
-			auto drawerSettings = drawer.GetDrawerSettings();
 			int xOnBoard = me.PosX - drawerSettings.BoardStartPositionX - 1;
 			int yOnBoard = me.PosY - drawerSettings.BoardStartPositionY - 1;
-			if (-1 < xOnBoard && xOnBoard < boardWidth &&
-				-1 < yOnBoard && yOnBoard < boardHeight)
+
+			if (xOnBoard < 0 || boardWidth  <= xOnBoard ||
+				yOnBoard < 0 || boardHeight <= yOnBoard)
+				continue;
+
+			if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Left)
 			{
-				if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Left)
-				{
-					board.OpenCell(xOnBoard, yOnBoard);
-					auto cell = board.GetCell(xOnBoard, yOnBoard);
+				board.OpenCell(xOnBoard, yOnBoard);
+				auto cell = board.GetCell(xOnBoard, yOnBoard);
 
-					if (cell.HasBomb)
-					{
-						drawer.Draw();
-						break;
-					}
-				}
-				else if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
+				if (cell.HasBomb)
 				{
-					board.FlagCell(xOnBoard, yOnBoard);
+					drawer.Draw();
+					return;
 				}
-
-				drawer.Draw();
 			}
+			else if (me.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
+			{
+				board.FlagCell(xOnBoard, yOnBoard);
+			}
+
+			drawer.Draw();
 		}
 	}
 

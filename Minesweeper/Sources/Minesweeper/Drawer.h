@@ -81,6 +81,7 @@ namespace Minesweeper
 			Console::PrintMessage(textXStart, textYStart, "Bombs left: 13");
 			Console::PrintMessage(textXStart, textYStart + 1, "Time left: 87\n");
 		}
+
 		const DrawerSettings& GetDrawerSettings() const
 		{
 			return Settings;
