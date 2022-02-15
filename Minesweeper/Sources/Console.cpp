@@ -41,6 +41,7 @@ namespace Console
 
 	void Init(const ConsoleSettings& cs)
 	{
+		// TODO: sustain font size on window resize
 		SetConsoleMode(ConsoleInput, ENABLE_EXTENDED_FLAGS | ENABLE_MOUSE_INPUT);
 
 		SetConsoleTitleA(cs.ConsoleTitle.c_str());
