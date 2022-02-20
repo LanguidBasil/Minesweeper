@@ -1,4 +1,4 @@
-#include "Console.h";
+#include "Console.h"
 
 #include <iostream>
 #include <string>
@@ -6,7 +6,7 @@
 #include <Windows.h>
 #include <cstring>
 
-static const char SQUARE = 219;
+static const unsigned char SQUARE = 219;
 
 namespace Console
 {
@@ -26,7 +26,7 @@ namespace Console
 		SetCurrentConsoleFontEx(ConsoleOutput, false, &cfi);
 	}
 
-	static void SetConsoleSize(int xOffset, int yOffset, int width, int height, int fontWidth, int fontHeight)
+	static void SetConsoleSize(short xOffset, short yOffset, short width, short height, short fontWidth, short fontHeight)
 	{
 		SMALL_RECT windowSize = { 0, 0, width, height };
 
