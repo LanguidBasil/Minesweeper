@@ -23,7 +23,7 @@ namespace Minesweeper
 	class Drawer
 	{
 	public:
-		explicit Drawer(const Minesweeper::Board<width, height, amountOfBombs>& b, const DrawerSettings& drawerSettings)
+		Drawer(const Minesweeper::Board<width, height, amountOfBombs>& b, const DrawerSettings& drawerSettings)
 			: Board(b), Settings(drawerSettings) {}
 
 		void Draw() const
