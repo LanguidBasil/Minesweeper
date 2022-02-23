@@ -115,6 +115,7 @@ namespace Minesweeper
 
 		ReceiveInput(b, d);
 
+		Console::ChangeColor(Console::Color::White, Console::Color::Black);
 		Console::PrintMessage(ds.TextStartPositionX, ds.TextStartPositionY + 1, "Bomb! Game Over");
 		std::cin.get();
 	}
