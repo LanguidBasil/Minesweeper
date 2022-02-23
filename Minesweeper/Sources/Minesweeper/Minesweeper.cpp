@@ -14,7 +14,7 @@ static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boar
 namespace Minesweeper
 {
 	template<int boardWidth, int boardHeight, int amountOfBombs>
-	int OpenCell(Board <boardWidth, boardHeight, amountOfBombs>& board, int posX, int posY)
+	static int OpenCell(Board <boardWidth, boardHeight, amountOfBombs>& board, int posX, int posY)
 	{
 		board.OpenCell(posX, posY);
 
@@ -48,8 +48,8 @@ namespace Minesweeper
 	}
 
 	template<int boardWidth, int boardHeight, int amountOfBombs>
-	void ReceiveInput(Board <boardWidth, boardHeight, amountOfBombs>& board,
-					  const Drawer<boardWidth, boardHeight, amountOfBombs>& drawer)
+	static void ReceiveInput(Board <boardWidth, boardHeight, amountOfBombs>& board,
+							 const Drawer<boardWidth, boardHeight, amountOfBombs>& drawer)
 	{
 		auto& drawerSettings = drawer.GetDrawerSettings();
 
