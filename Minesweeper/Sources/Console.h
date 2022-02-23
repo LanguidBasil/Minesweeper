@@ -7,24 +7,24 @@ namespace Console
 {
 	enum struct Color
 	{
-		Black = 0,
-		DarkGray = 8,
-		BrightGray = 7,
-		White = 15,
+		Black		  = 0,
+		DarkGray	  = 8,
+		BrightGray	  = 7,
+		White		  = 15,
 
-		DarkBlue = 1,
-		DarkGreen = 2,
-		DarkCyan = 3,
-		DarkRed = 4,
-		DarkMagenta = 5,
-		DarkYellow = 6,
+		DarkBlue	  = 1,
+		DarkGreen	  = 2,
+		DarkCyan	  = 3,
+		DarkRed		  = 4,
+		DarkMagenta   = 5,
+		DarkYellow	  = 6,
 
-		BrightBlue = 9,
-		BrightGreen = 10,
-		BrightCyan = 11,
-		BrightRed = 12,
+		BrightBlue	  = 9,
+		BrightGreen   = 10,
+		BrightCyan    = 11,
+		BrightRed     = 12,
 		BrightMagenta = 13,
-		BrightYellow = 14
+		BrightYellow  = 14
 	};
 
 	struct MouseEvent
@@ -36,18 +36,18 @@ namespace Console
 			Right
 		};
 
-		ButtonPressed ButtonPressed;
-		int PosX;
-		int PosY;
+		ButtonPressed ButtonPressed = ButtonPressed::None;
+		int PosX = 0;
+		int PosY = 0;
 	};
 
 	struct ConsoleSettings
 	{
-		int FontWidth;
-		int FontHeight;
+		int FontWidth  = 0;
+		int FontHeight = 0;
 
-		int ConsoleWidth;
-		int ConsoleHeight;
+		int ConsoleWidth  = 0;
+		int ConsoleHeight = 0;
 
 		std::string ConsoleTitle;
 	};

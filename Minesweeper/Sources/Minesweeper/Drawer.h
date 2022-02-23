@@ -7,16 +7,16 @@ namespace Minesweeper
 {
 	struct DrawerSettings
 	{
-		Console::Color ColorFrame;
-		Console::Color ColorCellOpen;
-		Console::Color ColorCellClosed;
-		Console::Color ColorCellFlagged;
+		Console::Color ColorFrame       = Console::Color::White;
+		Console::Color ColorCellOpen    = Console::Color::White;
+		Console::Color ColorCellClosed  = Console::Color::White;
+		Console::Color ColorCellFlagged = Console::Color::White;
 
-		int BoardStartPositionX;
-		int BoardStartPositionY;
+		int BoardStartPositionX = 0;
+		int BoardStartPositionY = 0;
 
-		int TextStartPositionX;
-		int TextStartPositionY;
+		int TextStartPositionX = 0;
+		int TextStartPositionY = 0;
 	};
 
 	template<int width, int height, int amountOfBombs>

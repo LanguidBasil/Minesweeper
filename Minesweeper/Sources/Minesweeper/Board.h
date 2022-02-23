@@ -14,11 +14,8 @@ namespace Minesweeper
 			Flagged
 		};
 
-		bool HasBomb;
-		State State;
-
-		Cell()
-			: HasBomb(false), State(State::Closed) {}
+		bool HasBomb = false;
+		State State  = State::Closed;
 	};
 
 	template <int width, int height, int amountOfBombs>
