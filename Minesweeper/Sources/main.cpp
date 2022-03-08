@@ -7,7 +7,7 @@
 
 int main()
 {
-	// TODO: Add timer
+	// TODO: Move timer into system
 	// TODO: Add losing to timer
 	// TODO: Add winning
 	// TODO: Add difficulty
