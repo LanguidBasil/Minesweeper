@@ -14,19 +14,16 @@ static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boar
 namespace Minesweeper
 {
 	template<int boardWidth, int boardHeight, int amountOfBombs>
-	static int OpenCell(Board <boardWidth, boardHeight, amountOfBombs>& board, int posX, int posY)
+	static void OpenCell(Board <boardWidth, boardHeight, amountOfBombs>& board, int posX, int posY)
 	{
 		board.OpenCell(posX, posY);
 
-		if (board.GetCell(posX, posY).HasBomb)
-			return -1;
-
+		// opening cells around empty cell
+		// O O O
+		// O X O
+		// O O O
 		if (board.BombsAroundCell(posX, posY) == 0)
 		{
-			// opening cells around empty cell
-			// O O O
-			// O X O
-			// O O O
 			for (auto y = -1; y < 2; y++)
 				for (auto x = -1; x < 2; x++)
 				{
@@ -43,8 +40,6 @@ namespace Minesweeper
 						OpenCell(board, currentX, currentY);
 				}
 		}
-
-		return 0;
 	}
 
 	template<int boardWidth, int boardHeight, int amountOfBombs>
@@ -68,7 +63,9 @@ namespace Minesweeper
 
 			if (mouseEvent.ButtonPressed == Console::MouseEvent::ButtonPressed::Left)
 			{
-				if (OpenCell(board, xOnBoard, yOnBoard) == -1)
+				OpenCell(board, xOnBoard, yOnBoard);
+
+				if (board.GetCell(xOnBoard, yOnBoard).HasBomb)
 				{
 					drawer.Draw();
 					return;
