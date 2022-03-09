@@ -112,7 +112,7 @@ namespace Console
 		std::array<INPUT_RECORD, 64> inputs;
 
 		if (!ReadConsoleInput(ConsoleInput, inputs.data(), inputs.size(), &amountOfInputEventsRead))
-			return { MouseEvent::ButtonPressed::None, 0, 0 };
+			return { MouseEvent::Button::None, 0, 0 };
 
 		for (auto i = 0; i < amountOfInputEventsRead; i++)
 		{
@@ -123,15 +123,15 @@ namespace Console
 			switch (mouseEventRecord.dwButtonState)
 			{
 			case FROM_LEFT_1ST_BUTTON_PRESSED:
-				me.ButtonPressed = MouseEvent::ButtonPressed::Left;
+				me.ButtonPressed = MouseEvent::Button::Left;
 				break;
 
 			case RIGHTMOST_BUTTON_PRESSED:
-				me.ButtonPressed = MouseEvent::ButtonPressed::Right;
+				me.ButtonPressed = MouseEvent::Button::Right;
 				break;
 
 			default:
-				me.ButtonPressed = MouseEvent::ButtonPressed::None;
+				me.ButtonPressed = MouseEvent::Button::None;
 				break;
 			}
 			me.PosX = mouseEventRecord.dwMousePosition.X;
@@ -139,6 +139,6 @@ namespace Console
 			return me;
 		}
 
-		return { MouseEvent::ButtonPressed::None, 0, 0 };
+		return { MouseEvent::Button::None, 0, 0 };
 	}
 }

@@ -29,14 +29,14 @@ namespace Console
 
 	struct MouseEvent
 	{
-		enum struct ButtonPressed
+		enum struct Button
 		{
 			None,
 			Left,
 			Right
 		};
 
-		ButtonPressed ButtonPressed = ButtonPressed::None;
+		Button ButtonPressed = Button::None;
 		int PosX = 0;
 		int PosY = 0;
 	};

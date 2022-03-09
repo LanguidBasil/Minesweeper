@@ -11,6 +11,12 @@ static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boar
 		   -1 < posY && posY < boardHeight;
 }
 
+static struct InputInfo
+{
+	Console::MouseEvent::Button PressedButton;
+	bool EnconteredBomb;
+};
+
 namespace Minesweeper
 {
 	template<int boardWidth, int boardHeight, int amountOfBombs>
@@ -22,7 +28,7 @@ namespace Minesweeper
 		// O O O
 		// O X O
 		// O O O
-		if (board.BombsAroundCell(posX, posY) == 0)
+		if (!board.GetCell(posX, posY).HasBomb && board.BombsAroundCell(posX, posY) == 0)
 		{
 			for (auto y = -1; y < 2; y++)
 				for (auto x = -1; x < 2; x++)
@@ -43,41 +49,33 @@ namespace Minesweeper
 	}
 
 	template<int boardWidth, int boardHeight, int amountOfBombs>
-	static void ReceiveInput(Board <boardWidth, boardHeight, amountOfBombs>& board,
-							 const Drawer<boardWidth, boardHeight, amountOfBombs>& drawer)
+	static InputInfo ReceiveInput(Board <boardWidth, boardHeight, amountOfBombs>& board,
+							 const DrawerSettings& drawerSettings)
 	{
-		auto& drawerSettings = drawer.GetDrawerSettings();
+		auto mouseEvent = Console::GetMouseEvent();
+		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::None)
+			return { mouseEvent.ButtonPressed, false };
 
-		while (true)
+		int frameWidth = 1;
+		int xOnBoard = mouseEvent.PosX - drawerSettings.BoardStartPositionX - frameWidth;
+		int yOnBoard = mouseEvent.PosY - drawerSettings.BoardStartPositionY - frameWidth;
+
+		if (!InBoardBounds(xOnBoard, yOnBoard, boardWidth, boardHeight))
+			return { mouseEvent.ButtonPressed, false };
+
+		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::Left)
 		{
-			auto mouseEvent = Console::GetMouseEvent();
-			if (mouseEvent.ButtonPressed == Console::MouseEvent::ButtonPressed::None)
-				continue;
+			OpenCell(board, xOnBoard, yOnBoard);
 
-			constexpr int frameWidth = 1;
-			int xOnBoard = mouseEvent.PosX - drawerSettings.BoardStartPositionX - frameWidth;
-			int yOnBoard = mouseEvent.PosY - drawerSettings.BoardStartPositionY - frameWidth;
-
-			if (!InBoardBounds(xOnBoard, yOnBoard, boardWidth, boardHeight))
-				continue;
-
-			if (mouseEvent.ButtonPressed == Console::MouseEvent::ButtonPressed::Left)
-			{
-				OpenCell(board, xOnBoard, yOnBoard);
-
-				if (board.GetCell(xOnBoard, yOnBoard).HasBomb)
-				{
-					drawer.Draw(GameEnd::LostToBomb);
-					return;
-				}
-			}
-			else if (mouseEvent.ButtonPressed == Console::MouseEvent::ButtonPressed::Right)
-			{
-				board.FlagCell(xOnBoard, yOnBoard);
-			}
-
-			drawer.Draw();
+			if (board.GetCell(xOnBoard, yOnBoard).HasBomb)
+				return { mouseEvent.ButtonPressed, true };
 		}
+		else if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::Right)
+		{
+			board.FlagCell(xOnBoard, yOnBoard);
+		}
+
+		return { mouseEvent.ButtonPressed, false };
 	}
 
 	void StartGame()
@@ -110,7 +108,25 @@ namespace Minesweeper
 		Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds);
 		d.Draw();
 
-		ReceiveInput(b, d);
+		// game loop
+		while (true)
+		{
+			auto inputInfo = ReceiveInput(b, d.GetDrawerSettings());
+
+			if (inputInfo.PressedButton == Console::MouseEvent::Button::None)
+				continue;
+
+			if (inputInfo.EnconteredBomb)
+			{
+				d.Draw(GameEnd::LostToBomb);
+				break;
+			}
+			else
+			{
+				d.Draw();
+			}
+		}
+
 		std::cin.get();
 	}
 }
