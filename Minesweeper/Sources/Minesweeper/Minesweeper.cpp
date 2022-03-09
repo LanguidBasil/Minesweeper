@@ -104,9 +104,11 @@ namespace Minesweeper
 		}
 
 		Console::Init(cs);
+		auto timer = std::make_shared<Utils::EventTimer>(std::chrono::seconds(1));
+
 		Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> b;
-		Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds);
-		d.Draw();
+		Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds, timer);
+		d.DrawBoard();
 
 		// game loop
 		while (true)
@@ -118,12 +120,13 @@ namespace Minesweeper
 
 			if (inputInfo.EnconteredBomb)
 			{
-				d.Draw(GameEnd::LostToBomb);
+				d.DrawBoard();
+				d.DrawGameEnd(GameEnd::LostToBomb);
 				break;
 			}
 			else
 			{
-				d.Draw();
+				d.DrawBoard();
 			}
 		}
 
