@@ -2,6 +2,7 @@
 
 #include "../Console.h"
 #include "Board.h"
+#include "../Utils/EventTimer.h"
 
 namespace Minesweeper
 {
@@ -23,29 +24,11 @@ namespace Minesweeper
 	class Drawer
 	{
 	public:
-		Drawer(const Minesweeper::Board<width, height, amountOfBombs>& b, const DrawerSettings& drawerSettings)
-			: Board(b), Settings(drawerSettings) {}
-
-		void Draw() const
+		Drawer(const Minesweeper::Board<width, height, amountOfBombs>& board, const DrawerSettings& drawerSettings, std::shared_ptr<Utils::EventTimer> timer)
+			: Board(board), Settings(drawerSettings), Timer(timer)
 		{
-			DrawBoard();
-			DrawText();
+			//Timer->Event += DrawTimer;
 		}
-
-		void Draw(GameEnd gameEnd) const
-		{
-			DrawBoard();
-			DrawText(gameEnd);
-		}
-
-		const DrawerSettings& GetDrawerSettings() const
-		{
-			return Settings;
-		}
-
-	private:
-		const Minesweeper::Board<width, height, amountOfBombs>& Board;
-		const DrawerSettings Settings;
 
 		void DrawBoard() const
 		{
@@ -96,17 +79,29 @@ namespace Minesweeper
 			}
 		}
 
-		void DrawText() const
+		void DrawTimer(Utils::EventTimerArgs args) const
 		{
+			std::string message = "Time passed: " + std::to_string(args.TotalPassedTime.count() / 1000) + '\n';
+
 			Console::ChangeColor(Console::Color::White, Console::Color::Black);
-			Console::PrintMessage(Settings.TextStartPositionX, Settings.TextStartPositionY, "Time left: 87\n");
+			Console::PrintMessage(Settings.TextStartPositionX, Settings.TextStartPositionY, message);
 		}
 
-		void DrawText(GameEnd gameEnd) const
+		void DrawGameEnd(GameEnd gameEnd) const
 		{
-			DrawText();
+			Console::ChangeColor(Console::Color::White, Console::Color::Black);
 			Console::PrintMessage(Settings.TextStartPositionX, Settings.TextStartPositionY + 1, GameEndToMessage(gameEnd) + '\n');
 		}
+
+		const DrawerSettings& GetDrawerSettings() const
+		{
+			return Settings;
+		}
+
+	private:
+		const Minesweeper::Board<width, height, amountOfBombs>& Board;
+		const DrawerSettings Settings;
+		const std::shared_ptr<Utils::EventTimer> Timer;
 
 		// TODO add different colors
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const
