@@ -29,7 +29,13 @@ namespace Minesweeper
 		void Draw() const
 		{
 			DrawBoard();
-			//DrawText();
+			DrawText();
+		}
+
+		void Draw(GameEnd gameEnd) const
+		{
+			DrawBoard();
+			DrawText(gameEnd);
 		}
 
 		const DrawerSettings& GetDrawerSettings() const
@@ -92,11 +98,14 @@ namespace Minesweeper
 
 		void DrawText() const
 		{
-			int textXStart = Settings.TextStartPositionX;
-			int textYStart = Settings.TextStartPositionY;
-
 			Console::ChangeColor(Console::Color::White, Console::Color::Black);
-			Console::PrintMessage(textXStart, textYStart, "Time left: 87\n");
+			Console::PrintMessage(Settings.TextStartPositionX, Settings.TextStartPositionY, "Time left: 87\n");
+		}
+
+		void DrawText(GameEnd gameEnd) const
+		{
+			DrawText();
+			Console::PrintMessage(Settings.TextStartPositionX, Settings.TextStartPositionY + 1, GameEndToMessage(gameEnd) + '\n');
 		}
 
 		// TODO add different colors
@@ -105,6 +114,22 @@ namespace Minesweeper
 			if (bombsAroundCell == 0)
 				return Settings.ColorCellOpen;
 			return Console::Color::BrightBlue;
+		}
+
+		static constexpr std::string GameEndToMessage(GameEnd gameEnd)
+		{
+			switch (gameEnd)
+			{
+			case Minesweeper::GameEnd::Won:
+				return "Game over! You won";
+				break;
+			case Minesweeper::GameEnd::LostToBomb:
+				return "Game over! Bomb";
+			case Minesweeper::GameEnd::LostToTimer:
+				return "Game over! Timer expired";
+			default:
+				return "Invalid game end";
+			}
 		}
 	};
 }

@@ -67,7 +67,7 @@ namespace Minesweeper
 
 				if (board.GetCell(xOnBoard, yOnBoard).HasBomb)
 				{
-					drawer.Draw();
+					drawer.Draw(GameEnd::LostToBomb);
 					return;
 				}
 			}
@@ -111,9 +111,6 @@ namespace Minesweeper
 		d.Draw();
 
 		ReceiveInput(b, d);
-
-		Console::ChangeColor(Console::Color::White, Console::Color::Black);
-		Console::PrintMessage(ds.TextStartPositionX, ds.TextStartPositionY + 1, "Bomb! Game Over");
 		std::cin.get();
 	}
 }
