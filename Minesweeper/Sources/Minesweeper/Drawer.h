@@ -2,6 +2,7 @@
 
 #include "../Console.h"
 #include "Board.h"
+#include "GameEnd.h"
 #include "../Utils/EventTimer.h"
 
 namespace Minesweeper

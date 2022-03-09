@@ -4,6 +4,7 @@
 #include "../Console.h"
 #include "Board.h"
 #include "Drawer.h"
+#include "GameEnd.h"
 
 static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boardHeight)
 {
