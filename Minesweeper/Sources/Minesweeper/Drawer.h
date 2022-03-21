@@ -29,7 +29,7 @@ namespace Minesweeper
 			: Board(board), Settings(drawerSettings), Timer(timer)
 		{
 			// TODO: make timer appear on screen
-			//Timer->Event += DrawTimer;
+			Timer->Event += std::bind(&Drawer::DrawTimer, this, std::placeholders::_1);
 		}
 
 		void DrawBoard() const
