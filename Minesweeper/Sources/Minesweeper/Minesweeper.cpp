@@ -12,10 +12,13 @@ static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boar
 		   -1 < posY && posY < boardHeight;
 }
 
-static struct InputInfo
+struct InputInfo
 {
+public:
 	Console::MouseEvent::Button PressedButton;
 	bool EnconteredBomb;
+
+	InputInfo() = delete;
 };
 
 namespace Minesweeper
