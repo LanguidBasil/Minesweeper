@@ -1,10 +1,7 @@
 #pragma once
 
 #include "GameSettings.h"
-#include <array>
 #include <vector>
-#include <algorithm>
-#include <memory>
 
 namespace Minesweeper
 {
