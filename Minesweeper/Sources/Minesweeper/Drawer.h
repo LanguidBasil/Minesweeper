@@ -25,7 +25,7 @@ namespace Minesweeper
 	class Drawer
 	{
 	public:
-		Drawer(const Minesweeper::Board<width, height, amountOfBombs>& board, const DrawerSettings& drawerSettings, std::shared_ptr<Utils::EventTimer> timer)
+		Drawer(const Minesweeper::Board& board, const DrawerSettings& drawerSettings, std::shared_ptr<Utils::EventTimer> timer)
 			: Board(board), Settings(drawerSettings), Timer(timer)
 		{
 			Timer->Event += std::bind(&Drawer::DrawTimer, this, std::placeholders::_1);
@@ -100,7 +100,7 @@ namespace Minesweeper
 		}
 
 	private:
-		const Minesweeper::Board<width, height, amountOfBombs>& Board;
+		const Minesweeper::Board& Board;
 		const DrawerSettings Settings;
 		const std::shared_ptr<Utils::EventTimer> Timer;
 

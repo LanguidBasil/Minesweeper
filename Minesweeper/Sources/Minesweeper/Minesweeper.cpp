@@ -21,8 +21,7 @@ struct InputInfo
 
 namespace Minesweeper
 {
-	template<int boardWidth, int boardHeight, int amountOfBombs>
-	static void OpenCell(Board <boardWidth, boardHeight, amountOfBombs>& board, int posX, int posY)
+	static void OpenCell(Board& board, int posX, int posY)
 	{
 		board.OpenCell(posX, posY);
 
@@ -41,7 +40,7 @@ namespace Minesweeper
 					auto currentX = posX + x;
 					auto currentY = posY + y;
 
-					if (!InBoardBounds(currentX, currentY, boardWidth, boardHeight))
+					if (!InBoardBounds(currentX, currentY, board.WIDTH, board.HEIGHT))
 						continue;
 
 					if (board.GetCell(currentX, currentY).State == Minesweeper::Cell::State::Closed)
@@ -50,9 +49,7 @@ namespace Minesweeper
 		}
 	}
 
-	template<int boardWidth, int boardHeight, int amountOfBombs>
-	static InputInfo ReceiveInput(Board <boardWidth, boardHeight, amountOfBombs>& board,
-							 const DrawerSettings& drawerSettings)
+	static InputInfo ReceiveInput(Board& board, const DrawerSettings& drawerSettings)
 	{
 		auto mouseEvent = Console::GetMouseEvent();
 		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::None)
@@ -62,7 +59,7 @@ namespace Minesweeper
 		int xOnBoard = mouseEvent.PosX - drawerSettings.BoardStartPositionX - frameWidth;
 		int yOnBoard = mouseEvent.PosY - drawerSettings.BoardStartPositionY - frameWidth;
 
-		if (!InBoardBounds(xOnBoard, yOnBoard, boardWidth, boardHeight))
+		if (!InBoardBounds(xOnBoard, yOnBoard, board.WIDTH, board.HEIGHT))
 			return { mouseEvent.ButtonPressed, false };
 
 		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::Left)
@@ -116,7 +113,7 @@ namespace Minesweeper
 		Console::Init(consoleSettings);
 		auto timer = std::make_shared<Utils::EventTimer>(std::chrono::seconds(1));
 
-		Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> board;
+		Minesweeper::Board board(gameSettings);
 		Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> drawer(board, drawerSettings, timer);
 		drawer.DrawBoard();
 
