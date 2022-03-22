@@ -28,7 +28,6 @@ namespace Minesweeper
 		Drawer(const Minesweeper::Board<width, height, amountOfBombs>& board, const DrawerSettings& drawerSettings, std::shared_ptr<Utils::EventTimer> timer)
 			: Board(board), Settings(drawerSettings), Timer(timer)
 		{
-			// TODO: make timer appear on screen
 			Timer->Event += std::bind(&Drawer::DrawTimer, this, std::placeholders::_1);
 		}
 
@@ -105,7 +104,6 @@ namespace Minesweeper
 		const DrawerSettings Settings;
 		const std::shared_ptr<Utils::EventTimer> Timer;
 
-		// TODO: add different colors
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const
 		{
 			if (bombsAroundCell == 0)
