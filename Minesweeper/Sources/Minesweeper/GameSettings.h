@@ -4,9 +4,9 @@ namespace Minesweeper
 {
 	struct GameSettings
 	{
-		int BoardWidth;
-		int BoardHeight;
-		int AmountOfBombs;
-		int TimeBeforeGameOver;
+		int BoardWidth		   = 10;
+		int BoardHeight		   = 10;
+		int AmountOfBombs      = 100;
+		int TimeBeforeGameOver = 60;
 	};
 }
