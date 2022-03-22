@@ -114,7 +114,7 @@ namespace Minesweeper
 		auto timer = std::make_shared<Utils::EventTimer>(std::chrono::seconds(1));
 
 		Minesweeper::Board board(gameSettings);
-		Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> drawer(board, drawerSettings, timer);
+		Minesweeper::Drawer drawer(board, drawerSettings, timer);
 		drawer.DrawBoard();
 
 		// game loop
@@ -127,6 +127,7 @@ namespace Minesweeper
 
 			if (inputInfo.EnconteredBomb)
 			{
+				// TODO: stop updating timer after death
 				drawer.DrawBoard();
 				drawer.DrawGameEnd(GameEnd::LostToBomb);
 				break;
