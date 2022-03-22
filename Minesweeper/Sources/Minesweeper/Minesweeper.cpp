@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "../Console.h"
+#include "GameSettings.h"
 #include "Board.h"
 #include "Drawer.h"
 #include "GameEnd.h"
@@ -84,50 +85,58 @@ namespace Minesweeper
 		const int BOARD_WIDTH = 10;
 		const int BOARD_HEIGHT = 10;
 		const int AMOUNT_OF_BOMBS = 10;
-		Console::ConsoleSettings cs;
+		Console::ConsoleSettings consoleSettings;
 		{
-			cs.ConsoleWidth = 40;
-			cs.ConsoleHeight = 40;
-			cs.FontWidth = 12;
-			cs.FontHeight = 12;
-			cs.ConsoleTitle = "Minesweeper";
-		}
-		Minesweeper::DrawerSettings ds;
-		{
-			ds.ColorFrame = Console::Color::DarkGray;
-			ds.ColorCellClosed = Console::Color::White;
-			ds.ColorCellFlagged = Console::Color::DarkRed;
-			ds.ColorCellOpen = Console::Color::BrightGray;
-			ds.BoardStartPositionX = 1;
-			ds.BoardStartPositionY = 1;
-			ds.TextStartPositionX = 14;
-			ds.TextStartPositionY = 1;
+			consoleSettings.ConsoleWidth = 40;
+			consoleSettings.ConsoleHeight = 40;
+			consoleSettings.FontWidth = 12;
+			consoleSettings.FontHeight = 12;
+			consoleSettings.ConsoleTitle = "Minesweeper";
 		}
 
-		Console::Init(cs);
+		Minesweeper::GameSettings gameSettings;
+		{
+			gameSettings.BoardWidth = 10;
+			gameSettings.BoardHeight = 10;
+			gameSettings.AmountOfBombs = 10;
+			gameSettings.TimeBeforeGameOver = 60;
+		}
+		Minesweeper::DrawerSettings drawerSettings;
+		{
+			drawerSettings.ColorFrame = Console::Color::DarkGray;
+			drawerSettings.ColorCellClosed = Console::Color::White;
+			drawerSettings.ColorCellFlagged = Console::Color::DarkRed;
+			drawerSettings.ColorCellOpen = Console::Color::BrightGray;
+			drawerSettings.BoardStartPositionX = 1;
+			drawerSettings.BoardStartPositionY = 1;
+			drawerSettings.TextStartPositionX = 14;
+			drawerSettings.TextStartPositionY = 1;
+		}
+
+		Console::Init(consoleSettings);
 		auto timer = std::make_shared<Utils::EventTimer>(std::chrono::seconds(1));
 
-		Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> b;
-		Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> d(b, ds, timer);
-		d.DrawBoard();
+		Minesweeper::Board<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> board;
+		Minesweeper::Drawer<BOARD_WIDTH, BOARD_HEIGHT, AMOUNT_OF_BOMBS> drawer(board, drawerSettings, timer);
+		drawer.DrawBoard();
 
 		// game loop
 		while (true)
 		{
-			auto inputInfo = ReceiveInput(b, d.GetDrawerSettings());
+			auto inputInfo = ReceiveInput(board, drawer.GetDrawerSettings());
 
 			if (inputInfo.PressedButton == Console::MouseEvent::Button::None)
 				continue;
 
 			if (inputInfo.EnconteredBomb)
 			{
-				d.DrawBoard();
-				d.DrawGameEnd(GameEnd::LostToBomb);
+				drawer.DrawBoard();
+				drawer.DrawGameEnd(GameEnd::LostToBomb);
 				break;
 			}
 			else
 			{
-				d.DrawBoard();
+				drawer.DrawBoard();
 			}
 		}
 
