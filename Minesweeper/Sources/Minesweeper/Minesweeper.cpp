@@ -79,9 +79,6 @@ namespace Minesweeper
 
 	void StartGame()
 	{
-		const int BOARD_WIDTH = 10;
-		const int BOARD_HEIGHT = 10;
-		const int AMOUNT_OF_BOMBS = 10;
 		Console::ConsoleSettings consoleSettings;
 		{
 			consoleSettings.ConsoleWidth = 40;
@@ -127,9 +124,9 @@ namespace Minesweeper
 
 			if (inputInfo.EnconteredBomb)
 			{
-				// TODO: stop updating timer after death
 				drawer.DrawBoard();
 				drawer.DrawGameEnd(GameEnd::LostToBomb);
+				drawer.~Drawer();
 				break;
 			}
 			else
