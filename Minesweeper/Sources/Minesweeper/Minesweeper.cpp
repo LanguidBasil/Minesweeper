@@ -7,12 +7,6 @@
 #include <iostream>
 #include <chrono>
 
-static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boardHeight)
-{
-	return -1 < posX && posX < boardWidth &&
-		   -1 < posY && posY < boardHeight;
-}
-
 struct InputInfo
 {
 	Console::MouseEvent::Button PressedButton;
@@ -21,6 +15,12 @@ struct InputInfo
 
 namespace Minesweeper
 {
+	static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boardHeight)
+	{
+		return -1 < posX && posX < boardWidth &&
+			-1 < posY && posY < boardHeight;
+	}
+
 	static void OpenCell(Board& board, int posX, int posY)
 	{
 		board.OpenCell(posX, posY);
