@@ -1,9 +1,18 @@
 #include "Minesweeper/Minesweeper.h"
+#include "Console.h"
 
 int main()
 {
-	// TODO: add losing to timer
-	// TODO: add winning
+	Console::ConsoleSettings consoleSettings;
+	{
+		consoleSettings.ConsoleWidth = 50;
+		consoleSettings.ConsoleHeight = 50;
+		consoleSettings.FontWidth = 12;
+		consoleSettings.FontHeight = 12;
+		consoleSettings.ConsoleTitle = "Minesweeper";
+	}
+	Console::Init(consoleSettings);
 
+	// TODO: add winning
 	Minesweeper::StartGame();
 }

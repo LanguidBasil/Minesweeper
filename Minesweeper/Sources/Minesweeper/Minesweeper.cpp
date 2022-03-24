@@ -1,6 +1,5 @@
 #include "Minesweeper.h"
 
-#include "../Console.h"
 #include "GameSettings.h"
 #include "Board.h"
 #include "Drawer.h"
@@ -87,16 +86,6 @@ namespace Minesweeper
 
 	void StartGame()
 	{
-		Console::ConsoleSettings consoleSettings;
-		{
-			consoleSettings.ConsoleWidth = 50;
-			consoleSettings.ConsoleHeight = 50;
-			consoleSettings.FontWidth = 12;
-			consoleSettings.FontHeight = 12;
-			consoleSettings.ConsoleTitle = "Minesweeper";
-		}
-		Console::Init(consoleSettings);
-
 		Minesweeper::GameSettings gameSettings;
 		{
 			gameSettings.BoardWidth = 10;
