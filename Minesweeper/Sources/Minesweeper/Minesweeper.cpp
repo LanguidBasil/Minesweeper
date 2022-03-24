@@ -1,11 +1,12 @@
 #include "Minesweeper.h"
 
-#include <iostream>
 #include "../Console.h"
 #include "GameSettings.h"
 #include "Board.h"
 #include "Drawer.h"
 #include "GameEnd.h"
+#include <iostream>
+#include <chrono>
 
 static constexpr bool InBoardBounds(int posX, int posY, int boardWidth, int boardHeight)
 {
@@ -77,24 +78,33 @@ namespace Minesweeper
 		return { mouseEvent.ButtonPressed, false };
 	}
 
+	static void GameOver(Drawer& drawer, GameEnd gameEnd)
+	{
+		drawer.DrawBoard();
+		drawer.DrawGameEnd(gameEnd);
+		drawer.~Drawer();
+	}
+
 	void StartGame()
 	{
 		Console::ConsoleSettings consoleSettings;
 		{
-			consoleSettings.ConsoleWidth = 40;
-			consoleSettings.ConsoleHeight = 40;
+			consoleSettings.ConsoleWidth = 50;
+			consoleSettings.ConsoleHeight = 50;
 			consoleSettings.FontWidth = 12;
 			consoleSettings.FontHeight = 12;
 			consoleSettings.ConsoleTitle = "Minesweeper";
 		}
+		Console::Init(consoleSettings);
 
 		Minesweeper::GameSettings gameSettings;
 		{
 			gameSettings.BoardWidth = 10;
 			gameSettings.BoardHeight = 10;
 			gameSettings.AmountOfBombs = 10;
-			gameSettings.TimeBeforeGameOver = 60;
+			gameSettings.TimeBeforeGameOver = std::chrono::seconds(60);
 		}
+
 		Minesweeper::DrawerSettings drawerSettings;
 		{
 			drawerSettings.ColorFrame = Console::Color::DarkGray;
@@ -107,16 +117,28 @@ namespace Minesweeper
 			drawerSettings.TextStartPositionY = 1;
 		}
 
-		Console::Init(consoleSettings);
 		auto timer = std::make_shared<Utils::EventTimer>(std::chrono::seconds(1));
 
 		Minesweeper::Board board(gameSettings);
 		Minesweeper::Drawer drawer(board, drawerSettings, timer);
-		drawer.DrawBoard();
 
+		bool lostToTime = false;
+		timer->Event += [&](Utils::EventTimerArgs args) 
+			{
+				lostToTime = args.TotalPassedTime > gameSettings.TimeBeforeGameOver;
+			};
+
+		drawer.DrawBoard();
+		drawer.DrawTimer({ std::chrono::seconds(0), std::chrono::seconds(0) });
 		// game loop
 		while (true)
 		{
+			if (lostToTime)
+			{
+				GameOver(drawer, GameEnd::LostToTimer);
+				break;
+			}
+
 			auto inputInfo = ReceiveInput(board, drawer.GetDrawerSettings());
 
 			if (inputInfo.PressedButton == Console::MouseEvent::Button::None)
@@ -124,15 +146,11 @@ namespace Minesweeper
 
 			if (inputInfo.EnconteredBomb)
 			{
-				drawer.DrawBoard();
-				drawer.DrawGameEnd(GameEnd::LostToBomb);
-				drawer.~Drawer();
+				GameOver(drawer, GameEnd::LostToBomb);
 				break;
 			}
-			else
-			{
-				drawer.DrawBoard();
-			}
+
+			drawer.DrawBoard();
 		}
 
 		std::cin.get();
