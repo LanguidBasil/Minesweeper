@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <memory>
+#include <stdlib.h>
+#include <time.h>
 
 namespace Minesweeper
 {
@@ -73,8 +75,7 @@ namespace Minesweeper
 		for (auto i = 0; i < cellAmount; i++)
 			cellsIndecesWithBombs[i] = i;
 
-		// TODO: add randomness
-		//std::srand(std::time)
+		srand(time(nullptr));
 		std::random_shuffle(std::begin(cellsIndecesWithBombs), std::end(cellsIndecesWithBombs));
 
 		for (auto i = 0; i < AMOUNT_OF_BOMBS; i++)
