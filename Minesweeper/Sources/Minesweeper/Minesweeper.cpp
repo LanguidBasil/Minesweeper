@@ -84,6 +84,31 @@ namespace Minesweeper
 		drawer.~Drawer();
 	}
 
+	static void GameLoop(Board& board, Drawer& drawer, const bool& lostToTime)
+	{
+		while (true)
+		{
+			if (lostToTime)
+			{
+				GameOver(drawer, GameEnd::LostToTimer);
+				return;
+			}
+
+			auto inputInfo = ReceiveInput(board, drawer.GetDrawerSettings());
+
+			if (inputInfo.PressedButton == Console::MouseEvent::Button::None)
+				continue;
+
+			if (inputInfo.EnconteredBomb)
+			{
+				GameOver(drawer, GameEnd::LostToBomb);
+				return;
+			}
+
+			drawer.DrawBoard();
+		}
+	}
+
 	void StartGame()
 	{
 		Minesweeper::GameSettings gameSettings;
@@ -119,28 +144,8 @@ namespace Minesweeper
 
 		drawer.DrawBoard();
 		drawer.DrawTimer({ std::chrono::seconds(0), std::chrono::seconds(0) });
-		// game loop
-		while (true)
-		{
-			if (lostToTime)
-			{
-				GameOver(drawer, GameEnd::LostToTimer);
-				break;
-			}
 
-			auto inputInfo = ReceiveInput(board, drawer.GetDrawerSettings());
-
-			if (inputInfo.PressedButton == Console::MouseEvent::Button::None)
-				continue;
-
-			if (inputInfo.EnconteredBomb)
-			{
-				GameOver(drawer, GameEnd::LostToBomb);
-				break;
-			}
-
-			drawer.DrawBoard();
-		}
+		GameLoop(board, drawer, lostToTime);
 
 		std::cin.get();
 	}
