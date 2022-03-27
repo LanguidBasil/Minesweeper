@@ -13,5 +13,6 @@ int main()
 	}
 	Console::Init(consoleSettings);
 
+	// TODO: add menu screen
 	Minesweeper::StartGame();
 }
