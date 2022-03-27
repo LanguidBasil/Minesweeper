@@ -39,7 +39,14 @@ int main()
 	Console::ChangeColor(Console::Color::White, Console::Color::Black);
 	PrintMenu();
 	std::cin.get();
-	Console::Clear();
 
-	Minesweeper::StartGame();
+	bool wantToContinue = true;
+	while (wantToContinue)
+	{
+		Console::Clear();
+		Minesweeper::StartGame();
+		char input;
+		std::cin.get(input);
+		wantToContinue = toupper(input) == 'Y';
+	}
 }
