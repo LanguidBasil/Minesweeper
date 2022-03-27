@@ -10,6 +10,7 @@ static const unsigned char SQUARE = 219;
 
 namespace Console
 {
+	static ConsoleSettings ConsoleSetting;
 	static const HANDLE ConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	static const HANDLE ConsoleInput = GetStdHandle(STD_INPUT_HANDLE);
 
@@ -49,11 +50,18 @@ namespace Console
 
 	void Init(const ConsoleSettings& cs)
 	{
+		ConsoleSetting = cs;
 		SetConsoleMode(ConsoleInput, ENABLE_EXTENDED_FLAGS | ENABLE_MOUSE_INPUT);
 		SetConsoleTitleA(cs.ConsoleTitle.c_str());
 		SetConsoleSize(100, 80, cs.ConsoleWidth, cs.ConsoleHeight, cs.FontWidth, cs.FontHeight);
 		SetConsoleFont(cs.FontWidth, cs.FontHeight);
 		SetConsoleCursor();
+	}
+
+	void Clear()
+	{
+		ChangeColor(Color::Black, Color::Black);
+		PrintSquareSolid(0, 0, ConsoleSetting.ConsoleWidth, ConsoleSetting.ConsoleHeight);
 	}
 
 	void PrintMessage(short posX, short posY, const std::string& message)

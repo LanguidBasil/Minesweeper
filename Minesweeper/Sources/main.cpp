@@ -39,8 +39,7 @@ int main()
 	Console::ChangeColor(Console::Color::White, Console::Color::Black);
 	PrintMenu();
 	std::cin.get();
-	Console::ChangeColor(Console::Color::Black, Console::Color::Black);
-	Console::PrintSquareSolid(0, 0, 80, 50);
+	Console::Clear();
 
 	Minesweeper::StartGame();
 }
