@@ -49,22 +49,22 @@ namespace Minesweeper
 		}
 	}
 
-	static InputInfo ReceiveInput(Board& board, const DrawerSettings& drawerSettings)
+	static InputInfo HandleInput(Board& board, const DrawerSettings& drawerSettings)
 	{
 		// TODO: bug with flagging cells
 		// when key is hold and mouse has moved mouse event registers again
 		// this can lead to accidentally unflagging a cell immediately after flagging it
 
 		auto mouseEvent = Console::GetMouseEvent();
-		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::None)
-			return { mouseEvent.ButtonPressed, false };
-
 		int frameWidth = 1;
 		int xOnBoard = mouseEvent.PosX - drawerSettings.BoardStartPositionX - frameWidth;
 		int yOnBoard = mouseEvent.PosY - drawerSettings.BoardStartPositionY - frameWidth;
 
-		if (!InBoardBounds(xOnBoard, yOnBoard, board.WIDTH, board.HEIGHT))
+		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::None ||
+			!InBoardBounds(xOnBoard, yOnBoard, board.WIDTH, board.HEIGHT))
+		{
 			return { mouseEvent.ButtonPressed, false };
+		}
 
 		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::Left)
 		{
@@ -82,8 +82,11 @@ namespace Minesweeper
 		{
 			board.FlagCell(xOnBoard, yOnBoard);
 		}
+		else
+		{
+			return { mouseEvent.ButtonPressed, false };
+		}
 
-		return { mouseEvent.ButtonPressed, false };
 	}
 
 	static void GameOver(Drawer& drawer, GameEnd gameEnd)
@@ -103,10 +106,12 @@ namespace Minesweeper
 				return;
 			}
 
-			auto inputInfo = ReceiveInput(board, drawer.GetDrawerSettings());
+			auto inputInfo = HandleInput(board, drawer.GetDrawerSettings());
 
 			if (inputInfo.PressedButton == Console::MouseEvent::Button::None)
 				continue;
+
+			// add winning here
 
 			if (inputInfo.EnconteredBomb)
 			{
