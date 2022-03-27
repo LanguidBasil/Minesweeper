@@ -17,8 +17,10 @@ namespace Minesweeper
 	{
 		auto& cell = Cells[PosToIndex(posX, posY)];
 
-		if (cell.State != Cell::State::Open)
+		if (cell.State == Cell::State::Closed)
 			cell.State = Cell::State::Flagged;
+		else if (cell.State == Cell::State::Flagged)
+			cell.State = Cell::State::Closed;
 	}
 
 	void Board::OpenCell(int posX, int posY)
