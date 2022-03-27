@@ -62,6 +62,16 @@ namespace Minesweeper
 		return Cells[PosToIndex(posX, posY)];
 	}
 
+	int Board::GetNotFlaggedBombs() const
+	{
+		int notFlaggedBombs = 0;
+		for (const auto& cell : Cells)
+			if (cell.HasBomb && cell.State == Cell::State::Flagged)
+				notFlaggedBombs++;
+
+		return notFlaggedBombs;
+	}
+
 	int Board::PosToIndex(int posX, int posY) const
 	{
 		return posY * WIDTH + posX;
