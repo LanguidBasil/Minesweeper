@@ -39,6 +39,7 @@ namespace Console
 		return (int)foregroundColor + (int)backgroundColor * 16;
 	}
 
+	// TODO: after drawing move cursor somewhere out of sight to avoid blicking
 	void Init(const ConsoleSettings& cs)
 	{
 		// TODO: sustain font size on window resize
