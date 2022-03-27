@@ -24,7 +24,7 @@ namespace Minesweeper
 	class Drawer
 	{
 	public:
-		Drawer(const Minesweeper::Board& board, const DrawerSettings& drawerSettings, const std::shared_ptr<Utils::EventTimer> timer);
+		Drawer(const Minesweeper::Board& board, const DrawerSettings& drawerSettings, std::shared_ptr<Utils::EventTimer> timer);
 		~Drawer();
 
 		void DrawBoard() const;
@@ -35,7 +35,7 @@ namespace Minesweeper
 	private:
 		const Minesweeper::Board& Board;
 		const DrawerSettings Settings;
-		const std::shared_ptr<Utils::EventTimer> Timer;
+		std::shared_ptr<Utils::EventTimer> Timer;
 
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const;
 		static std::string GameEndToMessage(GameEnd gameEnd);
