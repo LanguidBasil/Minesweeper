@@ -34,20 +34,26 @@ namespace Console
 		MoveWindow(GetConsoleWindow(), xOffset, yOffset, width * fontWidth, height * fontHeight, true);
 	}
 
+	static void SetConsoleCursor()
+	{
+		CONSOLE_CURSOR_INFO info;
+		info.dwSize = 100;
+		info.bVisible = FALSE;
+		SetConsoleCursorInfo(ConsoleOutput, &info);
+	}
+
 	static constexpr WORD ColorToWord(Color foregroundColor, Color backgroundColor)
 	{
 		return (int)foregroundColor + (int)backgroundColor * 16;
 	}
 
-	// TODO: after drawing move cursor somewhere out of sight to avoid blicking
 	void Init(const ConsoleSettings& cs)
 	{
 		SetConsoleMode(ConsoleInput, ENABLE_EXTENDED_FLAGS | ENABLE_MOUSE_INPUT);
-
 		SetConsoleTitleA(cs.ConsoleTitle.c_str());
 		SetConsoleSize(100, 80, cs.ConsoleWidth, cs.ConsoleHeight, cs.FontWidth, cs.FontHeight);
-
 		SetConsoleFont(cs.FontWidth, cs.FontHeight);
+		SetConsoleCursor();
 	}
 
 	void PrintMessage(short posX, short posY, const std::string& message)
