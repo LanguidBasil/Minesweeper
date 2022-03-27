@@ -64,9 +64,14 @@ namespace Minesweeper
 
 		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::Left)
 		{
+			auto cell = board.GetCell(xOnBoard, yOnBoard);
+
+			if (cell.State == Cell::State::Flagged)
+				return { mouseEvent.ButtonPressed, false };
+
 			OpenCell(board, xOnBoard, yOnBoard);
 
-			if (board.GetCell(xOnBoard, yOnBoard).HasBomb)
+			if (cell.HasBomb)
 				return { mouseEvent.ButtonPressed, true };
 		}
 		else if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::Right)
