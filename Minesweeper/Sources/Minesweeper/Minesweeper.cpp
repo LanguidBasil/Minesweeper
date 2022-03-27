@@ -82,11 +82,8 @@ namespace Minesweeper
 		{
 			board.FlagCell(xOnBoard, yOnBoard);
 		}
-		else
-		{
-			return { mouseEvent.ButtonPressed, false };
-		}
 
+		return { mouseEvent.ButtonPressed, false };
 	}
 
 	static void GameOver(Drawer& drawer, GameEnd gameEnd)
@@ -111,7 +108,11 @@ namespace Minesweeper
 			if (inputInfo.PressedButton == Console::MouseEvent::Button::None)
 				continue;
 
-			// add winning here
+			if (board.GetNotFlaggedBombs() == 0)
+			{
+				GameOver(drawer, GameEnd::Won);
+				return;
+			}
 
 			if (inputInfo.EnconteredBomb)
 			{

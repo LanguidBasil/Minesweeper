@@ -13,6 +13,5 @@ int main()
 	}
 	Console::Init(consoleSettings);
 
-	// TODO: add winning
 	Minesweeper::StartGame();
 }

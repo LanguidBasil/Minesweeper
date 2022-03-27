@@ -68,7 +68,7 @@ namespace Minesweeper
 	{
 		int notFlaggedBombs = 0;
 		for (const auto& cell : Cells)
-			if (cell.HasBomb && cell.State == Cell::State::Flagged)
+			if (cell.HasBomb && cell.State == Cell::State::Closed)
 				notFlaggedBombs++;
 
 		return notFlaggedBombs;
