@@ -51,6 +51,10 @@ namespace Minesweeper
 
 	static InputInfo ReceiveInput(Board& board, const DrawerSettings& drawerSettings)
 	{
+		// TODO: bug with flagging cells
+		// when key is hold and mouse has moved mouse event registers again
+		// this can lead to accidentally unflagging a cell immediately after flagging it
+
 		auto mouseEvent = Console::GetMouseEvent();
 		if (mouseEvent.ButtonPressed == Console::MouseEvent::Button::None)
 			return { mouseEvent.ButtonPressed, false };
