@@ -28,6 +28,7 @@ namespace Utils
 		milliseconds GetTotalPassedTime();
 
 	private:
+		bool ThreadIsActive;
 		std::thread Thread;
 		std::chrono::high_resolution_clock::time_point Start;
 

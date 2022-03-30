@@ -124,7 +124,6 @@ namespace Minesweeper
 		}
 	}
 
-	// TODO: when drawer gets freed it throws exception
 	void StartGame()
 	{
 		Minesweeper::GameSettings gameSettings;
