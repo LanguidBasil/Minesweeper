@@ -35,6 +35,7 @@ namespace Minesweeper
 	private:
 		const Minesweeper::Board& Board;
 		const DrawerSettings Settings;
+		const std::function<void(Utils::EventTimerArgs)> TimerEventFunc;
 		std::shared_ptr<Utils::EventTimer> Timer;
 
 		constexpr Console::Color ColorOfBombCount(int bombsAroundCell) const;

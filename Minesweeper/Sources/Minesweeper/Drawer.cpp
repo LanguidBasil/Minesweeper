@@ -3,14 +3,14 @@
 namespace Minesweeper
 {
 	Drawer::Drawer(const Minesweeper::Board& board, const DrawerSettings& drawerSettings, std::shared_ptr<Utils::EventTimer> timer)
-		: Board(board), Settings(drawerSettings), Timer(timer)
+		: Board(board), Settings(drawerSettings), TimerEventFunc(std::bind(&Drawer::DrawTimer, this, std::placeholders::_1)), Timer(timer)
 	{
-		Timer->Event += std::bind(&Drawer::DrawTimer, this, std::placeholders::_1);
+		Timer->Event += TimerEventFunc;
 	}
 
 	Drawer::~Drawer()
 	{
-		Timer->Event -= std::bind(&Drawer::DrawTimer, this, std::placeholders::_1);
+		Timer->Event -= TimerEventFunc;
 	}
 
 	void Drawer::DrawBoard() const
