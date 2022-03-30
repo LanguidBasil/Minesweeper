@@ -39,12 +39,16 @@ int main()
 	Console::ChangeColor(Console::Color::White, Console::Color::Black);
 	PrintMenu();
 	std::cin.get();
+	Console::Clear();
 
 	bool wantToContinue = true;
 	while (wantToContinue)
 	{
-		Console::Clear();
 		Minesweeper::StartGame();
+		Console::Clear();
+
+		Console::ChangeColor(Console::Color::White, Console::Color::Black);
+		Console::PrintMessage(0, 0, "Press y to start new game");
 		char input;
 		std::cin.get(input);
 		wantToContinue = toupper(input) == 'Y';
