@@ -9,5 +9,7 @@ From [Wikipedia](https://en.wikipedia.org/wiki/Minesweeper_(video_game))
 In this game board is 10 by 10 cells with 10 bombs on it. To find all you have 60 seconds
 
 Controls:
-left mouse button  - open cell
-right mouse button - flag cell
+- left mouse button  - open cell
+- right mouse button - flag cell
+
+This repository depends on [my event system](https://github.com/LanguidBasil/Event-System)
